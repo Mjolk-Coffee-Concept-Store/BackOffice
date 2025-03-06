@@ -7,22 +7,17 @@ import { ButtonModule } from 'primeng/button';
   imports: [ButtonModule, CommonModule],
   templateUrl: './dark-toggle.component.html',
 })
-export class DarkModeToggleComponent implements OnInit {
+export class DarkModeToggleComponent {
   public darkModeSet: string | null = localStorage.getItem('dark-mode');
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   toggleDarkMode() {
     const element = document.querySelector('html');
     if (!element) return;
     element.classList.toggle('dark-mode');
-    if (element.classList.contains('dark-mode')) {
-      localStorage.setItem('dark-mode', 'true');
-    } else {
-      localStorage.removeItem('dark-mode');
-    }
-    this.darkModeSet = localStorage.getItem('dark-mode');
+
+    this.darkModeSet = this.darkModeSet === 'true' ? null : 'true';
+    localStorage.setItem('dark-mode', this.darkModeSet || '');
   }
 }
