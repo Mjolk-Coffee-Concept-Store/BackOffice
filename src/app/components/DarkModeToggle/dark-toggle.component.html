@@ -1,0 +1,6 @@
+<p-button (onClick)="toggleDarkMode()">
+  <i *ngIf="darkModeSet; else sunIcon" class="pi pi-moon"></i>
+  <ng-template #sunIcon>
+    <i class="pi pi-sun"></i>
+  </ng-template>
+</p-button>

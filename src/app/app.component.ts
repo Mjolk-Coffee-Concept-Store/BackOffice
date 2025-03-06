@@ -1,42 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { RouterOutlet } from '@angular/router';
 import { environment } from '../environments/environment';
+import { ButtonModule } from 'primeng/button';
+import { PrimeNG } from 'primeng/config';
+import { DarkModeToggleComponent } from './components/DarkModeToggle/dark-toggle.component';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [DarkModeToggleComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   title = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private primeng: PrimeNG) {}
 
   ngOnInit(): void {
-    this.login().subscribe((response) => {
-      console.log(response);
-      this.whoAmI().subscribe((response) => {
-        console.log(response);
-      });
-    });
+    this.primeng.ripple.set(true);
   }
 
-  login(): Observable<any> {
-    const username = 'ericp';
-    const password = '5772';
-    return this.http.post(
-      `${environment.apiUrl}/users/login`,
-      { username, password },
-      { withCredentials: true }
-    );
-  }
-
-  whoAmI(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/users/whoami`, {
-      withCredentials: true,
-    });
+  toggleDarkMode() {
+    const element = document.querySelector('html');
+    if (!element) return;
+    element.classList.toggle('dark-mode');
   }
 }
